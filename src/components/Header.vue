@@ -8,8 +8,12 @@
 
     <div class="right">
       <form action="">
-        <input type="text" placeholder="Inserisci la tua ricerca...">
-        <button>Cerca</button>
+        <input 
+        type="text" 
+        placeholder="Inserisci la tua ricerca..."
+        v-model.trim="srcText"
+        >
+        <button @click.prevent="$emit('startTest',srcText)">Cerca</button>
       </form>
     </div>
   </header>
@@ -17,7 +21,12 @@
 
 <script>
 export default {
-  name : 'Header'
+  name : 'Header',
+  data(){
+    return{
+      srcText : ''
+    }
+  }
 }
 </script>
 
