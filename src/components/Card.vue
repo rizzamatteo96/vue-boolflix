@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card">
     Titolo = {{film.title}} <br>
     Titolo originale = {{film.original_title}} <br>
     Lingua = {{film.original_language}} <br>
@@ -15,5 +15,11 @@ export default {
 </script>
 
 <style lang="scss">
-
+  .card{
+    width: calc(100% / 5);
+    background-color: gray;
+    border-radius: 20px;
+    border: 1px solid red;
+    padding: 20px;
+  }
 </style>
