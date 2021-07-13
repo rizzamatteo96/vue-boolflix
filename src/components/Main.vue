@@ -52,8 +52,10 @@ export default {
     background-color: #141414;
     color: white;
 
-    h3{
+    .container > h3{
       margin-top: 40px;
+      font-size: 2rem;
+      text-transform: uppercase;
     }
 
     .filmCards,
