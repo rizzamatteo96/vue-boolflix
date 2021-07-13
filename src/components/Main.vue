@@ -4,7 +4,7 @@
       <h2 v-if="srcText != ''">Risultati per la ricerca = "{{srcText}}"</h2>
 
       <!-- Cards per films -->
-      <h3>Films</h3>
+      <h3 v-if="filmArray.length != 0">Films</h3>
       <div class="filmCards">
         <CardFilm 
         v-for="(film,i) in filmArray"
@@ -16,7 +16,7 @@
       </div>
 
       <!-- Cards per serie TV -->
-      <h3>Serie TV</h3>
+      <h3 v-if="tvArray.length != 0">Serie TV</h3>
       <div class="tvCards">
         <CardTv 
         v-for="(tv,i) in tvArray"

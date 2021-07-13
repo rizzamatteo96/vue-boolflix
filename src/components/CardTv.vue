@@ -1,7 +1,7 @@
 <template>
   <div class="card pos-rel">
     <!-- cover image -->
-    <img :src="imgBaseURL + imgBaseDimension + tv.poster_path" :alt="'Copertina ' + tv.name">
+    <img :src="imgBaseURL + imgBaseDimension + tv.poster_path" :alt="tv.name">
 
     <!-- Tv series info -->
     <div class="info d-none">
