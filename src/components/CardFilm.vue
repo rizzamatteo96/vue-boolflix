@@ -11,12 +11,12 @@
 
     <!-- fill stars -->
     <i class="fas fa-star"
-    v-for="(star,i) in loadStars(film.vote_average)" :key="i"
+    v-for="(star,i) in loadStars(film.vote_average)" :key="'A' + i"
     ></i>
 
     <!-- empty stars -->
     <i class="far fa-star"
-    v-for="(star,i) in loadEmptyStars(film.vote_average)" :key="i"
+    v-for="(star,i) in loadEmptyStars(film.vote_average)" :key="'B' + i"
     ></i>
   </div>
 

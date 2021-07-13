@@ -11,12 +11,12 @@
 
     <!-- fill stars -->
     <i class="fas fa-star"
-    v-for="(star,i) in loadStars(tv.vote_average)" :key="i"
+    v-for="(star,i) in loadStars(tv.vote_average)" :key="'A' + i"
     ></i>
 
     <!-- empty stars -->
     <i class="far fa-star"
-    v-for="(star,i) in loadEmptyStars(tv.vote_average)" :key="i"
+    v-for="(star,i) in loadEmptyStars(tv.vote_average)" :key="'B' + i"
     ></i>
   </div>
 
@@ -45,10 +45,10 @@ export default {
       }  
     },
     loadStars(vote){
-      return Math.round(vote / 2)
+      return parseInt(Math.round(vote / 2))
     },
     loadEmptyStars(vote){
-      return 5 - (Math.round(vote / 2))
+      return 5 - parseInt((Math.round(vote / 2)))
     }
   }
 }
