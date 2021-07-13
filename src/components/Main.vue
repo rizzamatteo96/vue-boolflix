@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container">
-      <h2 v-if="srcText != ''">Risultati per la ricerca = {{srcText}}</h2>
+      <h2 v-if="srcText != ''">Risultati per la ricerca = "{{srcText}}"</h2>
 
       <!-- Cards per films -->
       <h3>Films</h3>

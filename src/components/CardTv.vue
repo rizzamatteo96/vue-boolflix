@@ -9,20 +9,33 @@
       <!-- layover color -->
       <div class="layover">
         <div class="info-text">
-          Titolo = {{tv.name}} <br>
-          Titolo originale = {{tv.original_name}} <br>
-          Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
-          Voto = 
+          <!-- TITOLO -->
+          <h3>{{tv.name}}</h3>
 
-          <!-- fill stars -->
-          <i class="fas fa-star"
-          v-for="(star,i) in loadStars(tv.vote_average)" :key="'A' + i"
-          ></i>
+          <!-- TITOLO ORIGINALE -->
+          <div class="original-title">
+            Titolo originale = {{tv.original_name}}
+          </div>
 
-          <!-- empty stars -->
-          <i class="far fa-star"
-          v-for="(star,i) in loadEmptyStars(tv.vote_average)" :key="'B' + i"
-          ></i>
+          <!-- LINGUA -->
+          <div class="language">
+            Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
+          </div>
+
+          <!-- VOTO -->
+          <div class="vote">
+            Voto = 
+
+            <!-- STELLE PIENE -->
+            <i class="fas fa-star"
+            v-for="(star,i) in loadStars(tv.vote_average)" :key="'A' + i"
+            ></i>
+
+            <!-- STELLE VUOTE -->
+            <i class="far fa-star"
+            v-for="(star,i) in loadEmptyStars(tv.vote_average)" :key="'B' + i"
+            ></i>
+          </div>
         </div>
       </div>
 
@@ -42,10 +55,10 @@ export default {
   },
   methods : {
     getImgUrl(pic) {
+      // Funzione che verifica se l'immagine che si desidera caricare è presente
       try {
         let fileName = require('../assets/img/' + pic + '.png');
         // console.log("file found");
-        // console.log(fileName);
         return fileName
       } 
       catch (e) {
@@ -54,9 +67,11 @@ export default {
       }  
     },
     loadStars(vote){
+      // funzione che restituisce la quantità di stelle "piene" da stampare
       return parseInt(Math.round(vote / 2))
     },
     loadEmptyStars(vote){
+      // funzione che restituisce la quantità di stelle "vuote" da stampare
       return 5 - parseInt((Math.round(vote / 2)))
     }
   }
