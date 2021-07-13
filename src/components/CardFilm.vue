@@ -8,6 +8,7 @@
     Titolo originale = {{film.original_title}} <br>
     Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
     Voto = {{film.vote_average}} <br>
+    <i class="fas fa-star"></i>
   </div>
 
 </template>
