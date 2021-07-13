@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <Header @startTest="srcInAPI"/>
-    <Main :filmArray="filmArray" :tvArray="tvArray" :srcText="srcText"/>
+    <Main 
+    :filmArray="filmArray" 
+    :tvArray="tvArray" 
+    :imgBaseURL="imgBaseURL" 
+    :imgBaseDimension="imgBaseDimension"
+    :srcText="srcText"/>
   </div>
 </template>
 
@@ -22,6 +27,8 @@ export default {
       tvApiURL : 'https://api.themoviedb.org/3/search/tv?',
       filmArray : [],
       tvArray : [],
+      imgBaseURL : 'https://image.tmdb.org/t/p/',
+      imgBaseDimension : 'original',
       srcText : ''
     }
   },

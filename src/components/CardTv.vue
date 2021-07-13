@@ -1,5 +1,9 @@
 <template>
   <div class="card">
+    <div class="cover">
+      <img :src="imgBaseURL + imgBaseDimension + tv.poster_path" :alt="'Copertina ' + tv.name">
+    </div>
+    Percorso img = {{tv.poster_path}} <br>
     Titolo = {{tv.name}} <br>
     Titolo originale = {{tv.original_name}} <br>
     Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
@@ -11,7 +15,7 @@
 <script>
 export default {
   name : 'CardTv',
-  props : ['tv'],
+  props : ['tv','imgBaseURL','imgBaseDimension'],
   data(){
     return{
       language : this.tv.original_language
@@ -41,6 +45,12 @@ export default {
     border-radius: 20px;
     border: 1px solid red;
     padding: 20px;
+    
+    .cover{
+      img{
+        height: 5rem;
+      }
+    }
 
     img{
       height: 1rem;

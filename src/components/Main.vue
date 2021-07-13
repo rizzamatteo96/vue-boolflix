@@ -9,7 +9,9 @@
         <CardFilm 
         v-for="(film,i) in filmArray"
         :key="i"
-        :film="film"/>
+        :film="film"
+        :imgBaseURL="imgBaseURL"
+        :imgBaseDimension="imgBaseDimension"/>
 
       </div>
 
@@ -19,7 +21,9 @@
         <CardTv 
         v-for="(tv,i) in tvArray"
         :key="i"
-        :tv="tv"/>
+        :tv="tv"
+        :imgBaseURL="imgBaseURL"
+        :imgBaseDimension="imgBaseDimension"/>
 
       </div>
 
@@ -37,7 +41,7 @@ export default {
     CardFilm,
     CardTv
   },
-  props : ['filmArray','tvArray','srcText']
+  props : ['filmArray','tvArray','imgBaseURL','imgBaseDimension','srcText']
 }
 </script>
 

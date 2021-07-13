@@ -1,5 +1,9 @@
 <template>
   <div class="card">
+    <div class="cover">
+      <img :src="imgBaseURL + imgBaseDimension + film.backdrop_path" :alt="'Copertina ' + film.title">
+    </div>
+    Percorso img = {{film.backdrop_path}} <br>
     Titolo = {{film.title}} <br>
     Titolo originale = {{film.original_title}} <br>
     Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
@@ -11,7 +15,7 @@
 <script>
 export default {
   name : 'CardFilm',
-  props : ['film'],
+  props : ['film','imgBaseURL','imgBaseDimension'],
   data(){
     return{
       language : this.film.original_language
@@ -41,6 +45,12 @@ export default {
     border-radius: 20px;
     border: 1px solid red;
     padding: 20px;
+
+    .cover{
+      img{
+        height: 5rem;
+      }
+    }
 
     img{
       height: 1rem;
