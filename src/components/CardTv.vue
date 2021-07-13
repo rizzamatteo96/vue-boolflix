@@ -7,7 +7,17 @@
     Titolo = {{tv.name}} <br>
     Titolo originale = {{tv.original_name}} <br>
     Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
-    Voto = {{tv.vote_average}} <br>
+    Voto = {{tv.vote_average}} / 10<br>
+
+    <!-- fill stars -->
+    <i class="fas fa-star"
+    v-for="(star,i) in loadStars(tv.vote_average)" :key="i"
+    ></i>
+
+    <!-- empty stars -->
+    <i class="far fa-star"
+    v-for="(star,i) in loadEmptyStars(tv.vote_average)" :key="i"
+    ></i>
   </div>
 
 </template>
@@ -33,6 +43,12 @@ export default {
         // console.log("sorry, file not found" + e);
         return 'nothing'
       }  
+    },
+    loadStars(vote){
+      return Math.round(vote / 2)
+    },
+    loadEmptyStars(vote){
+      return 5 - (Math.round(vote / 2))
     }
   }
 }
