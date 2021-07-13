@@ -28,7 +28,7 @@ export default {
       filmArray : [],
       tvArray : [],
       imgBaseURL : 'https://image.tmdb.org/t/p/',
-      imgBaseDimension : 'original',
+      imgBaseDimension : 'w342',
       srcText : ''
     }
   },
@@ -87,6 +87,7 @@ export default {
 
 <style lang="scss">
 @import '@/style/commons.scss';
+@import '@/style/cards.scss';
 
 
 </style>

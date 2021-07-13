@@ -1,23 +1,32 @@
 <template>
-  <div class="card">
-    <div class="cover">
-      <img :src="imgBaseURL + imgBaseDimension + film.backdrop_path" :alt="'Copertina ' + film.title">
+  <div class="card pos-rel">
+    <!-- cover image -->
+    <img :src="imgBaseURL + imgBaseDimension + film.backdrop_path" :alt="film.title">
+
+    <!-- film infos -->
+    <div class="info d-none">
+
+      <!-- layover color -->
+      <div class="layover">
+        <div class="info-text">
+          Titolo = {{film.title}} <br>
+          Titolo originale = {{film.original_title}} <br>
+          Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
+          Voto = 
+
+          <!-- fill stars -->
+          <i class="fas fa-star"
+          v-for="(star,i) in loadStars(film.vote_average)" :key="'A' + i"
+          ></i>
+
+          <!-- empty stars -->
+          <i class="far fa-star"
+          v-for="(star,i) in loadEmptyStars(film.vote_average)" :key="'B' + i"
+          ></i>
+        </div>
+      </div>
+
     </div>
-    Percorso img = {{film.backdrop_path}} <br>
-    Titolo = {{film.title}} <br>
-    Titolo originale = {{film.original_title}} <br>
-    Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
-    Voto = {{film.vote_average}} / 10<br>
-
-    <!-- fill stars -->
-    <i class="fas fa-star"
-    v-for="(star,i) in loadStars(film.vote_average)" :key="'A' + i"
-    ></i>
-
-    <!-- empty stars -->
-    <i class="far fa-star"
-    v-for="(star,i) in loadEmptyStars(film.vote_average)" :key="'B' + i"
-    ></i>
   </div>
 
 </template>
@@ -45,31 +54,15 @@ export default {
       }  
     },
     loadStars(vote){
-      return Math.round(vote / 2)
+      return parseInt(Math.round(vote / 2))
     },
     loadEmptyStars(vote){
-      return 5 - (Math.round(vote / 2))
+      return 5 - parseInt(Math.round(vote / 2))
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .card{
-    width: calc(100% / 5);
-    background-color: gray;
-    border-radius: 20px;
-    border: 1px solid red;
-    padding: 20px;
-
-    .cover{
-      img{
-        height: 5rem;
-      }
-    }
-
-    img{
-      height: 1rem;
-    }
-  }
+  
 </style>
