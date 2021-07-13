@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header @startTest="srcFilm"/>
-    <Main :filmArray="filmArray" :srcText="srcText"/>
+    <Header @startTest="srcInAPI"/>
+    <Main :filmArray="filmArray" :tvArray="tvArray" :srcText="srcText"/>
   </div>
 </template>
 
@@ -18,30 +18,57 @@ export default {
   },
   data(){
     return{
-      apiURL : 'https://api.themoviedb.org/3/search/movie?',
+      filmApiURL : 'https://api.themoviedb.org/3/search/movie?',
+      tvApiURL : 'https://api.themoviedb.org/3/search/tv?',
       filmArray : [],
+      tvArray : [],
       srcText : ''
     }
   },
   methods : {
-    srcFilm(inputText){
-
+    srcInAPI(inputText){
+      this.srcFilm(inputText);
+      this.srcTv(inputText);
+    },
+    srcFilm(srcText){
       // save user search text
-      this.srcText = inputText;
+      this.srcText = srcText;
 
       // call films API
       axios
-        .get(this.apiURL, {
+        .get(this.filmApiURL, {
           params: {
             api_key : 'eaf4c2856a7f976135b9da0ff4eb870a',
-            query : inputText,
+            query : srcText,
             language : 'it-IT'
           }
         })
         .then(response => {
           // console.log(response.data.results);
           this.filmArray = response.data.results;
-          console.log(this.filmArray);
+          // console.log(this.filmArray);
+        })
+        .catch((error) => {
+          console.log('Errore : ' + error);
+        });
+    },
+    srcTv(srcText){
+      // save user search text
+      this.srcText = srcText;
+
+      // call films API
+      axios
+        .get(this.tvApiURL, {
+          params: {
+            api_key : 'eaf4c2856a7f976135b9da0ff4eb870a',
+            query : srcText,
+            language : 'it-IT'
+          }
+        })
+        .then(response => {
+          // console.log(response.data.results);
+          this.tvArray = response.data.results;
+          // console.log(this.filmArray);
         })
         .catch((error) => {
           console.log('Errore : ' + error);

@@ -3,27 +3,41 @@
     <div class="container">
       <h2 v-if="srcText != ''">Risultati per la ricerca = {{srcText}}</h2>
 
+      <!-- Cards per films -->
+      <h3>Films</h3>
       <div class="filmCards">
-
-        <Card 
+        <CardFilm 
         v-for="(film,i) in filmArray"
         :key="i"
         :film="film"/>
 
       </div>
+
+      <!-- Cards per serie TV -->
+      <h3>Serie TV</h3>
+      <div class="tvCards">
+        <CardTv 
+        v-for="(tv,i) in tvArray"
+        :key="i"
+        :tv="tv"/>
+
+      </div>
+
     </div>
   </main>
 </template>
 
 <script>
-import Card from '@/components/Card.vue';
+import CardFilm from '@/components/CardFilm.vue';
+import CardTv from '@/components/CardTv.vue';
 
 export default {
   name : 'Main',
   components : {
-    Card
+    CardFilm,
+    CardTv
   },
-  props : ['filmArray', 'srcText']
+  props : ['filmArray','tvArray','srcText']
 }
 </script>
 
@@ -34,11 +48,17 @@ export default {
     background-color: #141414;
     color: white;
 
-    .filmCards{
+    h3{
+      margin-top: 40px;
+    }
+
+    .filmCards,
+    .tvCards{
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       flex-wrap: wrap;
+      margin: 20px 0;
     }
   }
 </style>
