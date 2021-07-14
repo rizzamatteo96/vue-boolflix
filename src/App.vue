@@ -41,15 +41,17 @@ export default {
       // save user search text
       this.srcText = srcText;
 
-      // call films API
-      axios
-        .get(this.filmApiURL, {
+      const srcParams = {
           params: {
             api_key : 'eaf4c2856a7f976135b9da0ff4eb870a',
             query : srcText,
             language : 'it-IT'
           }
-        })
+        };
+
+      // call films API
+      axios
+        .get(this.filmApiURL, srcParams)
         .then(response => {
           // console.log(response.data.results);
           this.filmArray = response.data.results;
@@ -63,15 +65,17 @@ export default {
       // save user search text
       this.srcText = srcText;
 
-      // call films API
-      axios
-        .get(this.tvApiURL, {
+      const srcParams = {
           params: {
             api_key : 'eaf4c2856a7f976135b9da0ff4eb870a',
             query : srcText,
             language : 'it-IT'
           }
-        })
+        };
+
+      // call films API
+      axios
+        .get(this.tvApiURL, srcParams)
         .then(response => {
           // console.log(response.data.results);
           this.tvArray = response.data.results;

@@ -1,7 +1,13 @@
 <template>
   <div class="card bg-dark text-white h-100 border-0">
     <!-- cover image -->
-    <img :src="imgBaseURL + imgBaseDimension + img" :alt="title">
+    <img v-if="!imgError" 
+    :src="imgBaseURL + imgBaseDimension + img" 
+    :alt="title" 
+    @error="imgError=true">
+    <img v-else
+    src="../assets/img/notFound.png" 
+    alt="img not found">
 
     <!-- film infos -->
     <div class="info d-none">
@@ -14,17 +20,17 @@
 
           <!-- TITOLO ORIGINALE -->
           <div class="original-title">
-            Titolo originale = {{originalTitle}}
+            <span class="fw-bold">Titolo originale</span> = {{originalTitle}}
           </div>
 
           <!-- LINGUA -->
           <div class="language">
-            Lingua = <img :src="getImgUrl(language)" v-bind:alt="language">
+            <span class="fw-bold">Lingua </span> = <img :src="getImgUrl(language)" v-bind:alt="language">
           </div>
 
           <!-- VOTO -->
           <div class="vote">
-            Voto = 
+            <span class="fw-bold">Voto</span> = 
 
             <!-- STELLE PIENE -->
             <i class="fas fa-star"
@@ -35,6 +41,11 @@
             <i class="far fa-star"
             v-for="(star,i) in loadEmptyStars(vote)" :key="'B' + i"
             ></i>
+          </div>
+
+          <!-- OVERVIEW -->
+          <div class="overview">
+            <span class="fw-bold">Overview</span> = {{overview}}
           </div>
         </div>
       </div>
@@ -47,7 +58,12 @@
 <script>
 export default {
   name : 'CardGen',
-  props : ['title','originalTitle','vote','language','imgBaseURL','imgBaseDimension','img'],
+  props : ['title','originalTitle','vote','language','overview','imgBaseURL','imgBaseDimension','img'],
+  data(){
+    return{
+      imgError : false
+    }
+  },
   methods : {
     getImgUrl(pic) {
       console.log(this.imgBaseURL + this.imgBaseDimension + this.img);
@@ -75,7 +91,5 @@ export default {
 </script>
 
 <style lang="scss">
-  .card{
-    min-height: 150px;
-  }
+
 </style>

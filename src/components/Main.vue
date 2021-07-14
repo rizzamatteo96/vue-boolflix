@@ -12,9 +12,10 @@
           :originalTitle="film.original_title"
           :vote="film.vote_average"
           :language="film.original_language"
+          :overview="film.overview"
           :imgBaseURL="imgBaseURL"
           :imgBaseDimension="imgBaseDimension"
-          :img="film.backdrop_path"
+          :img="film.poster_path"
           />
         </div>
 
@@ -29,6 +30,7 @@
           :original-title="tv.original_name"
           :vote="tv.vote_average"
           :language="tv.original_language"
+          :overview="tv.overview"
           :imgBaseURL="imgBaseURL"
           :imgBaseDimension="imgBaseDimension"
           :img="tv.poster_path"
