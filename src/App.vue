@@ -1,12 +1,14 @@
 <template>
   <div id="app">
     <Header @startTest="srcInAPI"/>
-    <Main 
+    <Main
     :filmArray="filmArray" 
     :tvArray="tvArray" 
     :imgBaseURL="imgBaseURL" 
     :imgBaseDimension="imgBaseDimension"
-    :srcText="srcText"/>
+    :srcText="srcText"
+    :filmCast="filmCast"
+    :tvCast="tvCast"/>
   </div>
 </template>
 
@@ -29,13 +31,15 @@ export default {
       tvArray : [],
       imgBaseURL : 'https://image.tmdb.org/t/p/',
       imgBaseDimension : 'w342',
-      srcText : ''
+      srcText : '',
+      filmCast : [],
+      tvCast : []
     }
   },
   methods : {
     srcInAPI(inputText){
       // save user search text
-      this.srcText = srcText;
+      this.srcText = inputText;
       
       // prepare query parameters
       const srcParams = {
@@ -59,9 +63,45 @@ export default {
         .catch(axios.spread((errorFilm,errorTv) => {
           console.log('Errore API film : ' + errorFilm);
           console.log('Errore API serie TV : ' + errorTv);
-        }));
+        }))
+        .finally(() => {
+          this.filmCast = []
+          let temp = []
+          this.filmArray.forEach(item => {
+            axios
+              .get(`https://api.themoviedb.org/3/movie/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)
+              .then((answer) => {
+                temp.push(answer.data.cast);
+                if(temp.length == this.filmArray.length){
+                  this.filmCast = temp;
+                  console.log(this.filmCast);
+                }
+              })
+              .catch((e) => {
+                console.log('Film cast error : ' + e);
+              })
+              .finally(() => {});
+          });
+
+          this.tvCast = []
+          let temp2 = []
+          this.tvArray.forEach(item => {
+            axios
+              .get(`https://api.themoviedb.org/3/tv/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)
+              .then((answer) => {
+                temp2.push(answer.data.cast);
+                if(temp2.length == this.tvArray.length){
+                  this.tvCast = temp2;
+                  console.log(this.tvCast);
+                }
+              })
+              .catch((e) => {
+                console.log('Film cast error : ' + e);
+              })
+              .finally(() => {});
+          })
+        });
     },
-    
   }
 }
 </script>

@@ -47,6 +47,14 @@
           <div v-if="overview" class="overview">
             <span class="fw-bold">Overview</span> = {{overview}}
           </div>
+
+          <!-- CAST -->
+          <div v-if="cast && cast.length != 0" class="cast">
+             Cast = 
+             <ul>
+               <li v-for="(item,i) in Math.min(5,cast.length)" :key="'C' + i"> {{cast[i].name}} </li>
+             </ul>
+          </div>
         </div>
       </div>
 
@@ -58,10 +66,11 @@
 <script>
 export default {
   name : 'CardGen',
-  props : ['title','originalTitle','vote','language','overview','imgBaseURL','imgBaseDimension','img'],
+  props : ['title','originalTitle','vote','language','overview','imgBaseURL','imgBaseDimension','img','idCard','cast'],
   data(){
     return{
-      imgError : false
+      imgError : false,
+      genre : []
     }
   },
   methods : {
