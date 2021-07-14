@@ -44,7 +44,7 @@
           </div>
 
           <!-- OVERVIEW -->
-          <div class="overview">
+          <div v-if="overview" class="overview">
             <span class="fw-bold">Overview</span> = {{overview}}
           </div>
         </div>
@@ -66,7 +66,6 @@ export default {
   },
   methods : {
     getImgUrl(pic) {
-      console.log(this.imgBaseURL + this.imgBaseDimension + this.img);
       // Funzione che verifica se l'immagine che si desidera caricare è presente
       try {
         let fileName = require('../assets/img/' + pic + '.png');

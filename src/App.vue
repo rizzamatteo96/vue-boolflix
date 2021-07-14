@@ -34,57 +34,34 @@ export default {
   },
   methods : {
     srcInAPI(inputText){
-      this.srcFilm(inputText);
-      this.srcTv(inputText);
-    },
-    srcFilm(srcText){
       // save user search text
       this.srcText = srcText;
-
+      
+      // prepare query parameters
       const srcParams = {
           params: {
             api_key : 'eaf4c2856a7f976135b9da0ff4eb870a',
-            query : srcText,
+            query : inputText,
             language : 'it-IT'
           }
         };
 
-      // call films API
-      axios
-        .get(this.filmApiURL, srcParams)
-        .then(response => {
-          // console.log(response.data.results);
-          this.filmArray = response.data.results;
-          // console.log(this.filmArray);
-        })
-        .catch((error) => {
-          console.log('Errore : ' + error);
-        });
+      this.callAxios(srcParams);
     },
-    srcTv(srcText){
-      // save user search text
-      this.srcText = srcText;
-
-      const srcParams = {
-          params: {
-            api_key : 'eaf4c2856a7f976135b9da0ff4eb870a',
-            query : srcText,
-            language : 'it-IT'
-          }
-        };
-
-      // call films API
+    callAxios(params){
+      // call APIs
       axios
-        .get(this.tvApiURL, srcParams)
-        .then(response => {
-          // console.log(response.data.results);
-          this.tvArray = response.data.results;
-          // console.log(this.filmArray);
-        })
-        .catch((error) => {
-          console.log('Errore : ' + error);
-        });
-    }
+        .all([axios.get(this.filmApiURL,params),axios.get(this.tvApiURL,params)])
+        .then(axios.spread((responseFilm,responseTv) => {
+          this.filmArray = responseFilm.data.results;
+          this.tvArray = responseTv.data.results;
+        }))
+        .catch(axios.spread((errorFilm,errorTv) => {
+          console.log('Errore API film : ' + errorFilm);
+          console.log('Errore API serie TV : ' + errorTv);
+        }));
+    },
+    
   }
 }
 </script>
