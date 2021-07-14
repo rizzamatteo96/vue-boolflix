@@ -1,5 +1,5 @@
 <template>
-  <div class="card pos-rel">
+  <div class="card bg-dark text-white h-100 border-0">
     <!-- cover image -->
     <img :src="imgBaseURL + imgBaseDimension + tv.poster_path" :alt="tv.name">
 
@@ -79,5 +79,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+  .card{
+    min-height: 150px;
+  }
 </style>

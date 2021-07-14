@@ -1,5 +1,5 @@
 <template>
-  <div class="card pos-rel">
+  <div class="card bg-dark text-white h-100 border-0">
     <!-- cover image -->
     <img :src="imgBaseURL + imgBaseDimension + film.backdrop_path" :alt="film.title">
 
@@ -10,7 +10,7 @@
       <div class="layover">
         <div class="info-text">
           <!-- TITOLO -->
-          <h3>{{film.title}}</h3>
+          <h4>{{film.title}}</h4>
 
           <!-- TITOLO ORIGINALE -->
           <div class="original-title">
@@ -79,5 +79,7 @@ export default {
 </script>
 
 <style lang="scss">
-  
+  .card{
+    min-height: 150px;
+  }
 </style>

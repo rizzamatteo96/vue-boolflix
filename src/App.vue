@@ -86,8 +86,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/style/commons.scss';
-@import '@/style/cards.scss';
-
+  @import '@/style/commons.scss';
+  @import '@/style/cards.scss';
+  
+  body{
+    background-color: #141414;
+  }
 
 </style>

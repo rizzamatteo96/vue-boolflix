@@ -5,26 +5,25 @@
 
       <!-- Cards per films -->
       <h3 v-if="filmArray.length != 0">Films</h3>
-      <div class="filmCards">
-        <CardFilm 
-        v-for="(film,i) in filmArray"
-        :key="i"
-        :film="film"
-        :imgBaseURL="imgBaseURL"
-        :imgBaseDimension="imgBaseDimension"/>
+      <div class="filmCards row row-cols-4 mb-5">
+        <div v-for="(film,i) in filmArray" :key="i" class="g-5">
+          <CardFilm
+          :film="film"
+          :imgBaseURL="imgBaseURL"
+          :imgBaseDimension="imgBaseDimension"/>
+        </div>
 
       </div>
 
       <!-- Cards per serie TV -->
       <h3 v-if="tvArray.length != 0">Serie TV</h3>
-      <div class="tvCards">
-        <CardTv 
-        v-for="(tv,i) in tvArray"
-        :key="i"
-        :tv="tv"
-        :imgBaseURL="imgBaseURL"
-        :imgBaseDimension="imgBaseDimension"/>
-
+      <div class="tvCards row row-cols-4 mb-5">
+        <div v-for="(tv,i) in tvArray" :key="i"  class="g-5">
+          <CardTv 
+          :tv="tv"
+          :imgBaseURL="imgBaseURL"
+          :imgBaseDimension="imgBaseDimension"/>
+        </div>
       </div>
 
     </div>
@@ -47,8 +46,8 @@ export default {
 
 <style lang="scss">
   main{
-    padding: 30px 0;
-    min-height: calc(100vh - 100px);
+    // padding: 30px 0;
+    // min-height: calc(100vh - 100px);
     background-color: #141414;
     color: white;
 
@@ -56,15 +55,6 @@ export default {
       margin-top: 40px;
       font-size: 2rem;
       text-transform: uppercase;
-    }
-
-    .filmCards,
-    .tvCards{
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      margin: 20px 0;
     }
   }
 </style>
