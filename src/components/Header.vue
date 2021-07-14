@@ -7,6 +7,17 @@
     </div>
 
     <div class="right">
+      <!-- inizio selezione generi -->
+      <select @change="setGenreSrc($event)" v-if="genreList.length > 0" name="genres" id="genres">
+        <option value="">Seleziona un genere dalla lista</option>
+        <option 
+        v-for="(genre,i) in genreList" 
+        :key="i" 
+        :value="genre"> {{genre}} </option>
+      </select>
+      <!-- fine selezione generi -->
+
+      <!-- inizio sezione di ricerca -->
       <form action="">
         <input 
         type="text" 
@@ -15,6 +26,7 @@
         >
         <button @click.prevent="$emit('startTest',srcText)">Cerca</button>
       </form>
+      <!-- fine sezione di ricerca -->
     </div>
   </header>
 </template>
@@ -22,9 +34,16 @@
 <script>
 export default {
   name : 'Header',
+  props : ['genreList'],
   data(){
     return{
       srcText : ''
+    }
+  },
+  methods : {
+    setGenreSrc(event){
+      // console.log(event.target.value);
+      this.$emit('setGenre', event.target.value);
     }
   }
 }

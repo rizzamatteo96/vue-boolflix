@@ -1,16 +1,25 @@
 <template>
   <div id="app">
-    <Header @startTest="srcInAPI"/>
+    <!-- inizio header -->
+    <Header 
+    :genreList="generalGenre"
+    @startTest="srcInAPI"
+    @setGenre="setGenre"/>
+    <!-- fine header -->
+
+    <!-- inizio main -->
     <Main
-    :filmArray="filmArray" 
-    :tvArray="tvArray" 
+    :filmArray="filteredFilm" 
+    :tvArray="filteredTv" 
     :imgBaseURL="imgBaseURL" 
     :imgBaseDimension="imgBaseDimension"
     :srcText="srcText"
     :filmCast="filmCast"
     :filmGenre="filmGenre"
     :tvCast="tvCast"
-    :tvGenre="tvGenre"/>
+    :tvGenre="tvGenre"
+    :genreFilter="setGenre"/>
+    <!-- fine main -->
   </div>
 </template>
 
@@ -39,6 +48,9 @@ export default {
       filmGenre : [],
       tvCast : [],
       tvGenre : [],
+      genreFilter : '',
+      filteredFilm : [],
+      filteredTv : []
     }
   },
   methods : {
@@ -63,14 +75,16 @@ export default {
         .all([axios.get(this.filmApiURL,params),axios.get(this.tvApiURL,params)])
         .then(axios.spread((responseFilm,responseTv) => {
           this.filmArray = responseFilm.data.results;
+          this.filteredFilm = this.filmArray;
           this.tvArray = responseTv.data.results;
+          this.filteredTv = this.tvArray;
         }))
         .catch(axios.spread((errorFilm,errorTv) => {
           console.log('Errore API film : ' + errorFilm);
           console.log('Errore API serie TV : ' + errorTv);
         }))
         .finally(() => {
-          generalGenre = [];
+          this.generalGenre = [];
 
           this.filmCast = [];
           let tempCast = [];
@@ -84,20 +98,36 @@ export default {
                 tempCast.push(answerCast.data.cast);
                 if(tempCast.length == this.filmArray.length){
                   this.filmCast = tempCast;
-                  console.log(this.filmCast);
+                  // console.log(this.filmCast);
                 }
 
                 tempGenre.push(answerGenre.data.genres);
                 if(tempGenre.length == this.filmArray.length){
                   this.filmGenre = tempGenre;
-                  console.log(this.filmGenre);
+                  // console.log(this.filmGenre);
                 }
               }))
               .catch((e) => {
                 console.log('Film cast error : ' + e);
               })
               .finally(() => {
-
+                this.filmGenre.forEach(element => {
+                  if(element.length > 0){
+                    for(let i = 0; i < Math.min(5,element.length); i++){
+                      // console.log(i + 'elemento' + element[i].name);
+                      if(!this.generalGenre.includes(element[i].name)){
+                        this.generalGenre.push(element[i].name);
+                      }
+                    }
+                    
+                    // element.forEach(genre => {
+                    //   if(!this.generalGenre.includes(genre.name)){
+                    //     this.generalGenre.push(genre.name);
+                    //     // console.log(this.generalGenre);
+                    //   }
+                    // });
+                  }
+                });
               });
           });
 
@@ -113,22 +143,71 @@ export default {
                 tempCast2.push(answerCast.data.cast);
                 if(tempCast2.length == this.tvArray.length){
                   this.tvCast = tempCast2;
-                  console.log(this.tvCast);
+                  // console.log(this.tvCast);
                 }
 
                 tempGenre2.push(answerGenre.data.genres);
                 if(tempGenre2.length == this.tvArray.length){
                   this.tvGenre = tempGenre2;
-                  console.log(this.tvGenre);
+                  // console.log(this.tvGenre);
                 }
               }))
               .catch((e) => {
                 console.log('Film cast error : ' + e);
               })
-              .finally(() => {});
+              .finally(() => {
+                this.tvGenre.forEach(element => {
+                  if(element.length > 0){
+
+                    for(let i = 0; i < Math.min(5,element.length); i++){
+                      // console.log(i + 'elemento' + element[i].name);
+                      if(!this.generalGenre.includes(element[i].name)){
+                        this.generalGenre.push(element[i].name);
+                      }
+                    }
+
+                    // element.forEach(genre => {
+                    //   if(!this.generalGenre.includes(genre.name)){
+                    //     this.generalGenre.push(genre.name);
+                    //     // console.log(this.generalGenre);
+                    //   }
+                    // });
+                  }
+                });
+              });
           })
         });
     },
+    setGenre(genre){
+
+      typeof(genre) != "undefined" ? this.activeGenre = genre : '';
+
+      if(this.activeGenre == ''){
+        this.filteredFilm = this.filmArray;
+        this.filteredTv = this.tvArray;
+      }
+      else{
+        let temp = []
+        this.filteredFilm = this.filmArray.filter((element,i) => {
+          temp = [];
+          this.filmGenre[i].forEach(element => {
+            temp.push(element.name);
+            console.log(element);
+          });
+          return temp.includes(this.activeGenre);
+
+        });
+
+        let temp2 = []
+        this.filteredTv = this.tvArray.filter((element,i) => {
+          temp2 = [];
+          this.tvGenre[i].forEach(element => {
+            temp2.push(element.name);
+          });
+          return temp2.includes(this.activeGenre);
+        });
+      }
+    }
   }
 }
 </script>

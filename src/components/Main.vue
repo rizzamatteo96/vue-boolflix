@@ -18,6 +18,7 @@
           :img="film.poster_path"
           :cast="filmCast[i]"
           :genres="filmGenre[i]"
+          :genreFilter="genreFilter"
           />
         </div>
 
@@ -54,7 +55,7 @@ export default {
   components : {
     CardGen
   },
-  props : ['filmArray','tvArray','imgBaseURL','imgBaseDimension','srcText','filmCast','filmGenre','tvCast','tvGenre']
+  props : ['filmArray','tvArray','imgBaseURL','imgBaseDimension','srcText','filmCast','filmGenre','tvCast','tvGenre','genreFilter']
 }
 </script>
 
