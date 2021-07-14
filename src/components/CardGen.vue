@@ -1,25 +1,25 @@
 <template>
   <div class="card bg-dark text-white h-100 border-0">
     <!-- cover image -->
-    <img :src="imgBaseURL + imgBaseDimension + tv.poster_path" :alt="tv.name">
+    <img :src="imgBaseURL + imgBaseDimension + img" :alt="title">
 
-    <!-- Tv series info -->
+    <!-- film infos -->
     <div class="info d-none">
 
       <!-- layover color -->
       <div class="layover">
         <div class="info-text">
           <!-- TITOLO -->
-          <h3>{{tv.name}}</h3>
+          <h4>{{title}}</h4>
 
           <!-- TITOLO ORIGINALE -->
           <div class="original-title">
-            Titolo originale = {{tv.original_name}}
+            Titolo originale = {{originalTitle}}
           </div>
 
           <!-- LINGUA -->
           <div class="language">
-            Lingua = <img :src="getImgUrl(language)" v-bind:alt="language"> <br>
+            Lingua = <img :src="getImgUrl(language)" v-bind:alt="language">
           </div>
 
           <!-- VOTO -->
@@ -28,12 +28,12 @@
 
             <!-- STELLE PIENE -->
             <i class="fas fa-star"
-            v-for="(star,i) in loadStars(tv.vote_average)" :key="'A' + i"
+            v-for="(star,i) in loadStars(vote)" :key="'A' + i"
             ></i>
 
             <!-- STELLE VUOTE -->
             <i class="far fa-star"
-            v-for="(star,i) in loadEmptyStars(tv.vote_average)" :key="'B' + i"
+            v-for="(star,i) in loadEmptyStars(vote)" :key="'B' + i"
             ></i>
           </div>
         </div>
@@ -46,15 +46,11 @@
 
 <script>
 export default {
-  name : 'CardTv',
-  props : ['tv','imgBaseURL','imgBaseDimension'],
-  data(){
-    return{
-      language : this.tv.original_language
-    }
-  },
+  name : 'CardGen',
+  props : ['title','originalTitle','vote','language','imgBaseURL','imgBaseDimension','img'],
   methods : {
     getImgUrl(pic) {
+      console.log(this.imgBaseURL + this.imgBaseDimension + this.img);
       // Funzione che verifica se l'immagine che si desidera caricare è presente
       try {
         let fileName = require('../assets/img/' + pic + '.png');

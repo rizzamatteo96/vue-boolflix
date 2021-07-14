@@ -7,10 +7,15 @@
       <h3 v-if="filmArray.length != 0">Films</h3>
       <div class="filmCards row row-cols-4 mb-5">
         <div v-for="(film,i) in filmArray" :key="i" class="g-5">
-          <CardFilm
-          :film="film"
+          <CardGen
+          :title="film.title"
+          :originalTitle="film.original_title"
+          :vote="film.vote_average"
+          :language="film.original_language"
           :imgBaseURL="imgBaseURL"
-          :imgBaseDimension="imgBaseDimension"/>
+          :imgBaseDimension="imgBaseDimension"
+          :img="film.backdrop_path"
+          />
         </div>
 
       </div>
@@ -19,10 +24,15 @@
       <h3 v-if="tvArray.length != 0">Serie TV</h3>
       <div class="tvCards row row-cols-4 mb-5">
         <div v-for="(tv,i) in tvArray" :key="i"  class="g-5">
-          <CardTv 
-          :tv="tv"
+          <CardGen
+          :title="tv.name"
+          :original-title="tv.original_name"
+          :vote="tv.vote_average"
+          :language="tv.original_language"
           :imgBaseURL="imgBaseURL"
-          :imgBaseDimension="imgBaseDimension"/>
+          :imgBaseDimension="imgBaseDimension"
+          :img="tv.poster_path"
+          />
         </div>
       </div>
 
@@ -31,14 +41,12 @@
 </template>
 
 <script>
-import CardFilm from '@/components/CardFilm.vue';
-import CardTv from '@/components/CardTv.vue';
+import CardGen from '@/components/CardGen.vue';
 
 export default {
   name : 'Main',
   components : {
-    CardFilm,
-    CardTv
+    CardGen
   },
   props : ['filmArray','tvArray','imgBaseURL','imgBaseDimension','srcText']
 }
