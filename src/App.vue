@@ -8,7 +8,9 @@
     :imgBaseDimension="imgBaseDimension"
     :srcText="srcText"
     :filmCast="filmCast"
-    :tvCast="tvCast"/>
+    :filmGenre="filmGenre"
+    :tvCast="tvCast"
+    :tvGenre="tvGenre"/>
   </div>
 </template>
 
@@ -32,8 +34,11 @@ export default {
       imgBaseURL : 'https://image.tmdb.org/t/p/',
       imgBaseDimension : 'w342',
       srcText : '',
+      generalGenre : [],
       filmCast : [],
-      tvCast : []
+      filmGenre : [],
+      tvCast : [],
+      tvGenre : [],
     }
   },
   methods : {
@@ -65,36 +70,58 @@ export default {
           console.log('Errore API serie TV : ' + errorTv);
         }))
         .finally(() => {
-          this.filmCast = []
-          let temp = []
+          generalGenre = [];
+
+          this.filmCast = [];
+          let tempCast = [];
+          this.filmGenre = [];
+          let tempGenre = [];
           this.filmArray.forEach(item => {
-            axios
-              .get(`https://api.themoviedb.org/3/movie/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)
-              .then((answer) => {
-                temp.push(answer.data.cast);
-                if(temp.length == this.filmArray.length){
-                  this.filmCast = temp;
+            axios.all([
+              axios.get(`https://api.themoviedb.org/3/movie/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`),
+              axios.get(`https://api.themoviedb.org/3/movie/${item.id}?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)])
+              .then(axios.spread((answerCast, answerGenre) => {
+                tempCast.push(answerCast.data.cast);
+                if(tempCast.length == this.filmArray.length){
+                  this.filmCast = tempCast;
                   console.log(this.filmCast);
                 }
-              })
+
+                tempGenre.push(answerGenre.data.genres);
+                if(tempGenre.length == this.filmArray.length){
+                  this.filmGenre = tempGenre;
+                  console.log(this.filmGenre);
+                }
+              }))
               .catch((e) => {
                 console.log('Film cast error : ' + e);
               })
-              .finally(() => {});
+              .finally(() => {
+
+              });
           });
 
           this.tvCast = []
-          let temp2 = []
+          let tempCast2 = []
+          this.tvGenre = [];
+          let tempGenre2 = [];
           this.tvArray.forEach(item => {
-            axios
-              .get(`https://api.themoviedb.org/3/tv/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)
-              .then((answer) => {
-                temp2.push(answer.data.cast);
-                if(temp2.length == this.tvArray.length){
-                  this.tvCast = temp2;
+            axios.all([
+              axios.get(`https://api.themoviedb.org/3/tv/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`),
+              axios.get(`https://api.themoviedb.org/3/tv/${item.id}?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)])
+              .then(axios.spread((answerCast, answerGenre) => {
+                tempCast2.push(answerCast.data.cast);
+                if(tempCast2.length == this.tvArray.length){
+                  this.tvCast = tempCast2;
                   console.log(this.tvCast);
                 }
-              })
+
+                tempGenre2.push(answerGenre.data.genres);
+                if(tempGenre2.length == this.tvArray.length){
+                  this.tvGenre = tempGenre2;
+                  console.log(this.tvGenre);
+                }
+              }))
               .catch((e) => {
                 console.log('Film cast error : ' + e);
               })

@@ -50,9 +50,17 @@
 
           <!-- CAST -->
           <div v-if="cast && cast.length != 0" class="cast">
-             Cast = 
+             <span class="fw-bold">Cast =</span>
              <ul>
                <li v-for="(item,i) in Math.min(5,cast.length)" :key="'C' + i"> {{cast[i].name}} </li>
+             </ul>
+          </div>
+
+          <!-- GENRE -->
+           <div v-if="genres && genres.length != 0" class="genres">
+             <span class="fw-bold">Genres =</span>
+             <ul>
+               <li v-for="(item,i) in Math.min(5,genres.length)" :key="'C' + i"> {{genres[i].name}} </li>
              </ul>
           </div>
         </div>
@@ -66,11 +74,10 @@
 <script>
 export default {
   name : 'CardGen',
-  props : ['title','originalTitle','vote','language','overview','imgBaseURL','imgBaseDimension','img','idCard','cast'],
+  props : ['title','originalTitle','vote','language','overview','imgBaseURL','imgBaseDimension','img','idCard','cast','genres'],
   data(){
     return{
-      imgError : false,
-      genre : []
+      imgError : false
     }
   },
   methods : {

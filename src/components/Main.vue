@@ -17,6 +17,7 @@
           :imgBaseDimension="imgBaseDimension"
           :img="film.poster_path"
           :cast="filmCast[i]"
+          :genres="filmGenre[i]"
           />
         </div>
 
@@ -36,6 +37,7 @@
           :imgBaseDimension="imgBaseDimension"
           :img="tv.poster_path"
           :cast="tvCast[i]"
+          :genres="tvGenre[i]"
           />
         </div>
       </div>
@@ -52,7 +54,7 @@ export default {
   components : {
     CardGen
   },
-  props : ['filmArray','tvArray','imgBaseURL','imgBaseDimension','srcText','filmCast','tvCast']
+  props : ['filmArray','tvArray','imgBaseURL','imgBaseDimension','srcText','filmCast','filmGenre','tvCast','tvGenre']
 }
 </script>
 
