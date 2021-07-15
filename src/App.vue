@@ -122,6 +122,7 @@ export default {
                     element.forEach(genre => {
                       if(!this.generalGenre.includes(genre.name)){
                         this.generalGenre.push(genre.name);
+                        this.generalGenre.sort();
                         // console.log(this.generalGenre);
                       }
                     });
@@ -162,6 +163,7 @@ export default {
                     element.forEach(genre => {
                       if(!this.generalGenre.includes(genre.name)){
                         this.generalGenre.push(genre.name);
+                        this.generalGenre.sort();
                         // console.log(this.generalGenre);
                       }
                     });
@@ -181,49 +183,52 @@ export default {
       this.filteredTvCast = [];
       this.filteredTvGenres = [];
 
-      typeof(genre) != "undefined" ? this.activeGenre = genre : '';
+      setTimeout(() => {
+        // alert("Hello"); 
+        typeof(genre) != "undefined" ? this.activeGenre = genre : '';
 
-      if(this.activeGenre == ''){
-        this.filteredFilm = this.filmArray;
-        this.filteredFilmCast = this.filmCast;
-        this.filteredFilmGenres = this.filmGenre;
-        this.filteredTv = this.tvArray;
-        this.filteredTvCast = this.tvCast;
-        this.filteredTvGenres = this.tvGenre;
-      }
-      else{
-        let temp = []
-        this.filteredFilm = this.filmArray.filter((element,i) => {
-          temp = [];
-          this.filmGenre[i].forEach(element => {
-            temp.push(element.name);
-            // console.log(element);
+        if(this.activeGenre == ''){
+          this.filteredFilm = this.filmArray;
+          this.filteredFilmCast = this.filmCast;
+          this.filteredFilmGenres = this.filmGenre;
+          this.filteredTv = this.tvArray;
+          this.filteredTvCast = this.tvCast;
+          this.filteredTvGenres = this.tvGenre;
+        }
+        else{
+          let temp = []
+          this.filteredFilm = this.filmArray.filter((element,i) => {
+            temp = [];
+            this.filmGenre[i].forEach(element => {
+              temp.push(element.name);
+              // console.log(element);
+            });
+
+            if(temp.includes(this.activeGenre)){
+              this.filteredFilmCast.push(this.filmCast[i]);
+              this.filteredFilmGenres.push(this.filmGenre[i]);
+            }
+
+            return temp.includes(this.activeGenre);
+
           });
 
-          if(temp.includes(this.activeGenre)){
-            this.filteredFilmCast.push(this.filmCast[i]);
-            this.filteredFilmGenres.push(this.filmGenre[i]);
-          }
+          let temp2 = []
+          this.filteredTv = this.tvArray.filter((element,i) => {
+            temp2 = [];
+            this.tvGenre[i].forEach(element => {
+              temp2.push(element.name);
+            });
 
-          return temp.includes(this.activeGenre);
+            if(temp2.includes(this.activeGenre)){
+              this.filteredTvCast.push(this.tvCast[i]);
+              this.filteredTvGenres.push(this.tvGenre[i]);
+            }
 
-        });
-
-        let temp2 = []
-        this.filteredTv = this.tvArray.filter((element,i) => {
-          temp2 = [];
-          this.tvGenre[i].forEach(element => {
-            temp2.push(element.name);
+            return temp2.includes(this.activeGenre);
           });
-
-          if(temp2.includes(this.activeGenre)){
-            this.filteredTvCast.push(this.tvCast[i]);
-            this.filteredTvGenres.push(this.tvGenre[i]);
-          }
-
-          return temp2.includes(this.activeGenre);
-        });
-      }
+        }
+      }, 500);
     }
   }
 }
