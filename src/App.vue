@@ -76,54 +76,68 @@ export default {
     callAxios(params){
       // call APIs
       axios
+        // prepare film and tv series main api
         .all([axios.get(this.filmApiURL,params),axios.get(this.tvApiURL,params)])
+        // save the answer from apis to main array and to filtered array to show them on page
         .then(axios.spread((responseFilm,responseTv) => {
           this.filmArray = responseFilm.data.results;
           this.filteredFilm = this.filmArray;
           this.tvArray = responseTv.data.results;
           this.filteredTv = this.tvArray;
         }))
+        // catch the error from api if there are error and show them in the log
         .catch(axios.spread((errorFilm,errorTv) => {
           console.log('Errore API film : ' + errorFilm);
           console.log('Errore API serie TV : ' + errorTv);
         }))
+        // when the main apis are fully loaded, do next cycle
         .finally(() => {
+          // reset array for general genres list
           this.generalGenre = [];
 
+
+          // reset the arrays of the films
           this.filmCast = [];
           let tempCast = [];
           this.filmGenre = [];
           let tempGenre = [];
+
+          // call an api to load the cast and another one to load the genres of each film in the main array
           this.filmArray.forEach(item => {
             axios.all([
               axios.get(`https://api.themoviedb.org/3/movie/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`),
               axios.get(`https://api.themoviedb.org/3/movie/${item.id}?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)])
               .then(axios.spread((answerCast, answerGenre) => {
+                // save the single film's cast in a temporary array and, when it is completely filled, 
+                // save it into the main film cast array and in the filtered one to show them in the cards
                 tempCast.push(answerCast.data.cast);
                 if(tempCast.length == this.filmArray.length){
                   this.filmCast = tempCast;
                   this.filteredFilmCast = this.filmCast;
-                  // console.log(this.filmCast);
                 }
 
+                // save the single film's genres in a temporary array and, when it is completely filled, 
+                // save it into the main film genres array and in the filtered one to show them in the cards
                 tempGenre.push(answerGenre.data.genres);
                 if(tempGenre.length == this.filmArray.length){
                   this.filmGenre = tempGenre;
                   this.filteredFilmGenres = this.filmGenre;
-                  // console.log(this.filmGenre);
                 }
               }))
-              .catch((e) => {
-                console.log('Film cast error : ' + e);
+              .catch((eC,eG) => {
+                // catch eventually errors
+                console.log('Film cast error : ' + eC);
+                console.log('Film genres error : ' + eG);
               })
+              // when the casts and genres apis are fully loaded, do next cycle
               .finally(() => {
+                // create an array which contain all the genres of the films and tv series once per type
                 this.filmGenre.forEach(element => {
                   if(element.length > 0){
                     element.forEach(genre => {
                       if(!this.generalGenre.includes(genre.name)){
                         this.generalGenre.push(genre.name);
                         this.generalGenre.sort();
-                        // console.log(this.generalGenre);
                       }
                     });
                   }
@@ -131,40 +145,48 @@ export default {
               });
           });
 
+
+          // reset the arrays of the films
           this.tvCast = []
           let tempCast2 = []
           this.tvGenre = [];
           let tempGenre2 = [];
+
+          // call an api to load the cast and another one to load the genres of each tv series in the main array
           this.tvArray.forEach(item => {
             axios.all([
               axios.get(`https://api.themoviedb.org/3/tv/${item.id}/credits?api_key=eaf4c2856a7f976135b9da0ff4eb870a`),
               axios.get(`https://api.themoviedb.org/3/tv/${item.id}?api_key=eaf4c2856a7f976135b9da0ff4eb870a`)])
               .then(axios.spread((answerCast, answerGenre) => {
+                // save the single tv series' cast in a temporary array and, when it is completely filled, 
+                // save it into the main tv series cast array and in the filtered one to show them in the cards
                 tempCast2.push(answerCast.data.cast);
                 if(tempCast2.length == this.tvArray.length){
                   this.tvCast = tempCast2;
                   this.filteredTvCast = this.tvCast;
-                  // console.log(this.tvCast);
                 }
 
+                // save the single tv series' genres in a temporary array and, when it is completely filled, 
+                // save it into the main tv series genres array and in the filtered one to show them in the cards
                 tempGenre2.push(answerGenre.data.genres);
                 if(tempGenre2.length == this.tvArray.length){
                   this.tvGenre = tempGenre2;
                   this.filteredTvGenres = this.tvGenre;
-                  // console.log(this.tvGenre);
                 }
               }))
-              .catch((e) => {
-                console.log('Film cast error : ' + e);
+              .catch((eC,eG) => {
+                // catch eventually errors
+                console.log('Tv series cast error : ' + eC);
+                console.log('Tv series genres error : ' + eG);
               })
               .finally(() => {
+                // create an array which contain all the genres of the films and tv series once per type
                 this.tvGenre.forEach(element => {
                   if(element.length > 0){
                     element.forEach(genre => {
                       if(!this.generalGenre.includes(genre.name)){
                         this.generalGenre.push(genre.name);
                         this.generalGenre.sort();
-                        // console.log(this.generalGenre);
                       }
                     });
                   }
@@ -184,9 +206,10 @@ export default {
       this.filteredTvGenres = [];
 
       setTimeout(() => {
-        // alert("Hello"); 
+        // check if the filter is not present and, in case, set it to ''
         typeof(genre) != "undefined" ? this.activeGenre = genre : '';
 
+        // if there is no filter applied, use the main array to show films and series
         if(this.activeGenre == ''){
           this.filteredFilm = this.filmArray;
           this.filteredFilmCast = this.filmCast;
@@ -196,6 +219,7 @@ export default {
           this.filteredTvGenres = this.tvGenre;
         }
         else{
+          // filter the films array using selected genre filter
           let temp = []
           this.filteredFilm = this.filmArray.filter((element,i) => {
             temp = [];
@@ -208,11 +232,11 @@ export default {
               this.filteredFilmCast.push(this.filmCast[i]);
               this.filteredFilmGenres.push(this.filmGenre[i]);
             }
-
             return temp.includes(this.activeGenre);
 
           });
 
+          // filter the tv series array using selected genre filter
           let temp2 = []
           this.filteredTv = this.tvArray.filter((element,i) => {
             temp2 = [];

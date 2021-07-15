@@ -14,7 +14,7 @@
       name="genres" 
       id="genres"
       class="mx-1">
-        <option value="">Seleziona un genere dalla lista</option>
+        <option value="">Filtra per genere...</option>
         <option 
         v-for="(genre,i) in genreList" 
         :key="i" 
@@ -76,7 +76,6 @@ export default {
       form{
         *{
           padding: 10px 15px;
-          // margin: 0 5px;
         }
       }
     }

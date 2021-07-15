@@ -60,8 +60,7 @@
            <div v-if="genres && genres.length != 0" class="genres">
              <span class="fw-bold">Genres =</span>
              <ul>
-               <li v-for="(item,i) in genres" :key="'C' + i"> {{item.name}} </li>
-               <!-- <li v-for="(item,i) in Math.min(5,genres.length)" :key="'C' + i"> {{genres[i].name}} </li> -->
+               <li v-for="(item,i) in genres" :key="'D' + i"> {{item.name}} </li>
              </ul>
           </div>
         </div>

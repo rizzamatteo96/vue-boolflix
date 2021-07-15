@@ -61,8 +61,6 @@ export default {
 
 <style lang="scss">
   main{
-    // padding: 30px 0;
-    // min-height: calc(100vh - 100px);
     background-color: #141414;
     color: white;
 
