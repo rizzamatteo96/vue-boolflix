@@ -1,5 +1,6 @@
 .card{
-
+  transition: transform .2s; /* Animation */
+  
   &:hover .info{
     display: block !important;
     cursor: pointer;
@@ -37,4 +38,11 @@
       height: 1rem;
     }
   }
+}
+
+.card:hover {
+  transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  box-shadow: 0 0 18px rgb(255, 0, 0);
+  position: relative;
+  z-index: 999;
 }

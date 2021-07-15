@@ -6,9 +6,14 @@
       </h1>
     </div>
 
-    <div class="right">
+    <div class="right d-flex gx-2">
       <!-- inizio selezione generi -->
-      <select @change="setGenreSrc($event)" v-if="genreList.length > 0" name="genres" id="genres">
+      <select 
+      @change="setGenreSrc($event)" 
+      v-if="genreList.length > 0" 
+      name="genres" 
+      id="genres"
+      class="mx-1">
         <option value="">Seleziona un genere dalla lista</option>
         <option 
         v-for="(genre,i) in genreList" 
@@ -23,8 +28,9 @@
         type="text" 
         placeholder="Inserisci la tua ricerca..."
         v-model.trim="srcText"
+        class="mx-1"
         >
-        <button @click.prevent="$emit('startTest',srcText)">Cerca</button>
+        <button class="mx-1" @click.prevent="$emit('startTest',srcText)">Cerca</button>
       </form>
       <!-- fine sezione di ricerca -->
     </div>
@@ -70,7 +76,7 @@ export default {
       form{
         *{
           padding: 10px 15px;
-          margin: 0 5px;
+          // margin: 0 5px;
         }
       }
     }
